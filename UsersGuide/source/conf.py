@@ -17,6 +17,8 @@ import re
 import sys
 import os
 import shlex
+import subprocess
+from datetime import date
 
 if not 'OPENMODELICAHOME' in os.environ:
   os.environ['OPENMODELICAHOME'] = os.path.abspath('../../../build')
@@ -38,7 +40,6 @@ sys.path.append(os.path.abspath('.')) # For myext
 extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
-    'sphinx.ext.pngmath',
     'sphinx.ext.ifconfig',
     'sphinxcontrib.bibtex',
     'sphinxcontrib.inlinesyntaxhighlight',
@@ -46,7 +47,9 @@ extensions = [
 ]
 
 # As long as we are not generating with the epub tag it is save to use MathJax.
-if 'nomathjax' not in tags: extensions.append('sphinx.ext.mathjax')
+if 'latex' not in tags:
+  extensions.append('sphinx.ext.imgmath' if 'nomathjax' in tags else 'sphinx.ext.mathjax')
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -64,7 +67,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'OpenModelica User\'s Guide'
-copyright = u'2015, Open Source Modelica Consortium'
+copyright = u' %d, Open Source Modelica Consortium' % (date.today().year)
 author = u'Open Source Modelica Consortium'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -75,19 +78,34 @@ author = u'Open Source Modelica Consortium'
 if os.path.exists('../../../.git'):
   r = git.repo.Repo('../../../')
   release = r.git.describe(["--tags","--match=v*.*.*"])
-  version = re.search("^v[0-9]+[.][0-9]+[.][0-9]+", release).group(0)
-  if version == release or re.match("^v[0-9]+[.][0-9]+[.][0-9]+-[A-Za-z]+$", release):
-    docrepo = git.repo.Repo('../../')
-    docprevrelease = re.search("^v[0-9]+[.][0-9]+[.][0-9]+", docrepo.git.describe(["--tags","--match=v*.*.*[0-9]", release + "~1"])).group(0)
-    link = "`%s <https://github.com/OpenModelica/OpenModelica/releases/tag/%s>`__ `(diff) <https://github.com/OpenModelica/OpenModelica-doc/compare/%s...%s>`__" % (release,release,docprevrelease,release)
+  versionx = re.search("^v([0-9]+)[.]([0-9]+)[.]([0-9]+)", release)
+  version = versionx.group(0)
+  major = int(versionx.group(1))
+  minor = int(versionx.group(2))
+  patch = int(versionx.group(3))
+  thisrelease = (major,minor,patch)
+  allversions = [thisrelease]
+  docrepo = git.repo.Repo('../../')
+  for t in r.tags:
+    try:
+      versionx = re.search("^v([0-9]+)[.]([0-9]+)[.]([0-9]+)$", str(t))
+      tagversion = versionx.group(0)
+      tagmajor = int(versionx.group(1))
+      tagminor = int(versionx.group(2))
+      tagpatch = int(versionx.group(3))
+      allversions.append((tagmajor, tagminor, tagpatch))
+    except:
+      pass
+  allversions.sort()
+  prevrelease = "v%d.%d.%d" % allversions[allversions.index((major,minor,patch))-1]
+  if version == release or re.match("^(v[0-9]+)[.]([0-9]+)[.]([0-9]+)-[A-Za-z]+[0-9]*$", release):
+    link = "`%s <https://github.com/OpenModelica/OpenModelica/releases/tag/%s>`__ `(diff <https://github.com/OpenModelica/OpenModelica/compare/%s...%s>`__, `doc diff) <https://github.com/OpenModelica/OpenModelica-doc/compare/%s...%s>`__" % (release,release,prevrelease,release,prevrelease,release)
   else:
-    releasex = re.search("^(v[0-9]+[.][0-9]+[.][0-9]+-[A-Za-z]*)-([0-9]+)-(.*)$", release)
-    release = "%s.%d+%s" % (releasex.group(1),int(releasex.group(2)),releasex.group(3))
-    docrepo = git.repo.Repo('../../')
-    doctag = re.search("^v[0-9]+[.][0-9]+[.][0-9]+", docrepo.git.describe(["--tags","--match=v*.*.*[0-9]"])).group(0)
+    thisreleasestr = "v%d.%d.%d" % thisrelease
     docheadcommit = r.commit('HEAD').tree['doc'].hexsha
-
-    link = "`%s <https://github.com/OpenModelica/OpenModelica/releases/tag/%s>`__\ `.%d+%s <https://github.com/OpenModelica/OpenModelica/compare/%s...%s>`__ `(doc diff) <https://github.com/OpenModelica/OpenModelica-doc/compare/%s...%s>`__" % (releasex.group(1),releasex.group(1),int(releasex.group(2)),releasex.group(3),releasex.group(1),release[-7:],doctag,docheadcommit)
+    thissha = r.commit('HEAD').hexsha
+    semver = subprocess.check_output(["sh", "-c", "cd ../../../ && common/semver.sh"]).strip()
+    link = "`%s <https://github.com/OpenModelica/OpenModelica/commit/%s>`__ (`diff <https://github.com/OpenModelica/OpenModelica/compare/%s...%s>`__, `doc <https://github.com/OpenModelica/OpenModelica-doc/compare/%s...%s>`__)" % (semver,thissha,prevrelease,thissha,prevrelease,docheadcommit)
   releaselink = """.. only :: html or epub
 
     *Version:* %s""" % link
@@ -196,7 +214,7 @@ html_static_path = ['_static']
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
-#html_use_smartypants = True
+html_use_smartypants = False
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
@@ -408,3 +426,4 @@ numfig = True
 numfig_format = {'figure': "Figure %s", 'table': "Table %s", 'code-block': "Listing %s"}
 
 highlight_language = 'modelica'
+imgmath_image_format = 'svg'

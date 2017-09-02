@@ -23,63 +23,36 @@ formal parameters to the functions by the following notation:
 
 -  options – optional parameters with named formal parameter passing.
 
-OpenModelica Modelica Scripting Commands
-########################################
-
+OpenModelica Scripting Commands
+###############################
 
 The following are brief descriptions of the scripting commands available
-in the OpenModelica environment.
-
-OpenModelica Basic Commands
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This is a selection of the most common commands related to simulation
-and plotting:
-
-* `buildModel`_
-* `checkModel`_
-* `clear`_
-* `getErrorString`_
-* `help`_
-* `importFMU`_
-* `instantiateModel`_
-* `list`_
-* `listVariables`_
-* `loadFile`_
-* `loadModel`_
-* `plot`_
-* `plotParametric`_
-* `save`_
-* `saveAll`_
-* `saveModel`_
-* `saveTotalModel`_
-* `setCommandLineOptions`_
-* `setInitXmlStartValue`_
-* `simulate`_
-* `translateModel`_
-* `typeOf`_
-
-OpenModelica System Commands
-############################
-
-This is a selection of common OpenModelica commands related to the
-operating system:
-
-* `cd`_
-* `deleteFile`_
-* `dirName`_
-* `readFile`_
-* `runScript`_
-* `setModelicaPath`_
-* `system`_
-* `writeFile`_
-
-All OpenModelica API Calls
-##########################
-
-All OpenModelica API commands shown in alphabetic order:
+in the OpenModelica environment. All commands are shown in alphabetical order:
 
 .. include :: interface.inc
+
+Simulation Parameter Sweep
+##########################
+
+Following example shows how to update the parameters and re-run the simulation without compiling the model.
+
+.. code-block :: modelica
+
+  loadFile("BouncingBall.mo");
+  getErrorString();
+  // build the model once
+  buildModel(BouncingBall);
+  getErrorString();
+  for i in 1:3 loop
+    // We update the parameter e start value from 0.7 to "0.7 + i".
+    value := 0.7 + i;
+    // call the generated simulation code to produce a result file BouncingBall%i%_res.mat
+    system("./BouncingBall -override=e="+String(value)+" -r=BouncingBall" + String(i) + "_res.mat");
+    getErrorString();
+  end for;
+
+We used the `BouncingBall.mo <https://github.com/OpenModelica/OMCompiler/blob/master/Examples/BouncingBall.mo>`__ in the example above.
+The above example produces three result files each containing different start value for *e* i.e., 1.7, 2.7, 3.7.
 
 Examples
 ########

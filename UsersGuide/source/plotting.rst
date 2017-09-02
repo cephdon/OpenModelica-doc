@@ -57,41 +57,12 @@ The results are identical, except the detailed plot has a smoother curve.
 
   x
 
-Plotting Commands and their Options
------------------------------------
+Plot Command Interface
+----------------------
 
-All of these commands can have any number of optional arguments to
-further customize the the resulting diagram. The available options and
-their allowed values are listed below.
+Plot command have a number of optional arguments to
+further customize the the resulting diagram.
 
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| **Option**       | **Default value**                   | **Description**                                                                                             |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| fileName         | The result of the last simulation   | The name of the result-file containing the variables to plot                                                |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| grid             | true                                | Determines whether or not a grid is shown in the diagram.                                                   |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| title            | ""                                  | This text will be used as the diagram title.                                                                |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| logX             | false                               | Determines whether or not the horizontal axis is logarithmically scaled.                                    |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| logY             | false                               | Determines whether or not the vertical axis is logarithmically scaled.                                      |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| xLabel           | "time"                              | This text will be used as the horizontal label in the diagram.                                              |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| yLabel           | ""                                  | This text will be used as the vertical label in the diagram.                                                |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| xRange           | {0, 0}                              | Determines the horizontal interval that is visible in the diagram. {0, 0} will select a suitable range.     |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| yRange           | {0, 0}                              | Determines the vertical interval that is visible in the diagram. {0, 0} will select a suitable range.       |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| curveWidth       | 1.0                                 | Defines the width of the curve.                                                                             |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| curveStyle       | 1                                   | Defines the style of the curve.                                                                             |
-|                  |                                     |                                                                                                             |
-|                  |                                     | SolidLine=1, DashLine=2, DotLine=3, DashDotLine=4, DashDotDotLine=5, Sticks=6, Steps=7.                     |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| legendPosition   | "top"                               | Defines the position of the legend in the diagram. Possible values are left, right, top, bottom and none.   |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
-| externalWindow   | false                               | Opens a new OMPlot window if set to true otherwise update the current opened window.                        |
-+------------------+-------------------------------------+-------------------------------------------------------------------------------------------------------------+
+.. omc-mos ::
+
+  list(OpenModelica.Scripting.plot,interfaceOnly=true)

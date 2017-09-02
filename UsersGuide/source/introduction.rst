@@ -355,6 +355,7 @@ We test code instantiation of the model to flat code:
 We plot part of the simulated result:
 
 .. omc-gnuplot :: dcmotor
+  :caption: Rotation and rotational velocity of the DC motor
 
   load.w
   load.phi
@@ -435,6 +436,7 @@ val(variableName, time) function:
 Plot itot and open:
 
 .. omc-gnuplot :: switch
+  :caption: Plot when the switch opens
 
   itot
   open
@@ -478,6 +480,7 @@ It is simulated:
 It is plotted:
 
 .. omc-gnuplot :: VanDerPol
+  :caption: VanDerPol plotParametric(x,y)
   :parametric:
 
   x
@@ -726,7 +729,7 @@ experimental version without load balancing. The following command, not
 yet available from the OpenModelica GUI, will run a parallel simulation
 on a model:
 
->>> omc +d=openmp model.mo
+>>> omc -d=openmp model.mo
 
 Loading Specific Library Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -820,7 +823,7 @@ Different kinds of calls with returned results:
   getConnectionCount(BouncingBall)
   getInheritanceCount(BouncingBall)
   getComponentModifierValue(BouncingBall,e)
-  getComponentModifierNames(BouncingBall,e)
+  getComponentModifierNames(BouncingBall,"e")
   getClassRestriction(BouncingBall)
   getVersion() // Version of the currently running OMC
 
@@ -1013,11 +1016,11 @@ parameters**
 | ""
 
 In order to obtain more information from the compiler one can use the
-command line options **+showErrorMessages +d=failtrace** when running
+command line options **--showErrorMessages -d=failtrace** when running
 the compiler:
 
-C:\\dev> C:\\OpenModelica1.9.2 \\bin\\omc +showErrorMessages
-+d=failtrace script.mos
+C:\\dev> C:\\OpenModelica1.9.2 \\bin\\omc --showErrorMessages
+-d=failtrace script.mos
 
 .. |omlogo| image:: logo.*
   :alt: OpenModelica logotype

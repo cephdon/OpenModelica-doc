@@ -9,10 +9,135 @@ year: the project leader and main author/editor of this document
 followed by main contributors followed by contributors in alphabetical
 order.
 
+OpenModelica Contributors 2015
+------------------------------
+
+Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
+
+|
+
+Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
+
+Adeel Asghar, PELAB, Linköping University, Linköping, Sweden.
+
+Willi Braun, Fachhochschule Bielefeld, Bielefeld, Germany.
+
+Lennart Ochel, Fachhochschule Bielefeld, Bielefeld, Germany.
+
+Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
+
+Volker Waurich, TU Dresden, Dresden, Germany.
+
+Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
+
+Anders Andersson, VTI, Linköping, Sweden.
+
+Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
+
+Bernhard Bachmann, Fachhochschule Bielefeld, Bielefeld, Germany.
+
+Robert Braun, IEI, Linköping University, Linköping, Sweden.
+
+David Broman, PELAB, Linköping University, Linköping, Sweden.
+
+Daniel Bouskela, EDF, Paris, France.
+
+Lena Buffoni, PELAB, Linköping University, Linköping, Sweden.
+
+Francesco Casella, Politecnico di Milano, Milan, Italy.
+
+Atiyah Elsheikh, AIT, Vinnea, Austria.
+
+Rüdiger Franke, ABB, Germany
+
+Jens Frenkel, TU Dresden, Dresden, Germany.
+
+Mahder Gebremedhin, PELAB, Linköping University, Linköping, Sweden.
+
+Pavel Grozman, Equa AB, Stockholm, Sweden.
+
+Daniel Hedberg, MathCore Engineering AB, Linköping, Sweden.
+
+Alf Isaksson, ABB Corporate Research, Västerås, Sweden.
+
+Daniel Kanth, Bosch-Rexroth, Lohr am Main, Germany.
+
+Henning Kiel, Bocholt, Germany.
+
+Tommi Karhela, VTT, Espoo, Finland.
+
+Petter Krus, IEI, Linköping University, Linköping, Sweden.
+
+Juha Kortelainen, VTT, Espoo, Finland.
+
+Leonardo Laguna, Wolfram MathCore AB, Linköping, Sweden.
+
+Alexey Lebedev, Equa Simulation AB, Stockholm, Sweden.
+
+Oliver Lenord, Siemens PLM, California, USA.
+
+Ariel Liebman, Energy Users Association of Australia, Victoria, Australia.
+
+Alachew Mengist, PELAB, Linköping University, Linköping, Sweden.
+
+Abhir Raj Metkar, CDAC, Trivandrum, Kerala, India.
+
+Eric Meyers, Pratt & Whitney Rocketdyne, Palm City, Florida, USA.
+
+Lars Mikelsons, Bosch Rexroth, Lohr am Main, Germany.
+
+Afshin Moghadam, PELAB, Linköping University, Linköping, Sweden.
+
+Kannan Moudgalya, IIT Bombay, Mumbai, India.
+
+Kenneth Nealy, USA.
+
+Maroun Nemer, CEP Paristech, Ecole des Mines, Paris, France.
+
+Hannu Niemistö, VTT, Espoo, Finland.
+
+Peter Nordin, IEI, Linköping University, Linköping, Sweden.
+
+Arunkumar Palanisamy, PELAB, Linköping University, Linköping, Sweden.
+
+Pavol Privitzer, Institute of Pathological Physiology, Praha, Czech Republic.
+
+Vitalij Ruge, Fachhochschule Bielefeld, Bielefeld, Germany.
+
+Per Sahlin, Equa Simulation AB, Stockholm, Sweden.
+
+Roland Samlaus, Bosch, Stuttgart, Germany.
+
+Wladimir Schamai, EADS, Hamburg, Germany.
+
+Gerhard Schmitz, University of Hamburg, Hamburg, Germany.
+
+Jan Šilar, Charles University, Prague, Czech Republic
+
+Kristian Stavåker, PELAB, Linköping University, Linköping, Sweden.
+
+Sonia Tariq, PELAB, Linköping University, Linköping, Sweden.
+
+Bernhard Thiele, PELAB, Linköping University, Linköping, Sweden
+
+Hubert Thierot, CEP Paristech, Ecole des Mines, Paris, France.
+
+Gustaf Thorslund, PELAB, Linköping University, Linköping, Sweden.
+
+Mohsen Torabzadeh-Tari, PELAB, Linköping University, Linköping, Sweden.
+
+Marcus Walther, TU Dresden, Dresden, Germany
+
+Niklas Worschech, Bosch-Rexroth, Lohr am Main, Germany.
+
 OpenModelica Contributors 2014
 ------------------------------
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
@@ -27,6 +152,8 @@ Lennart Ochel, Fachhochschule Bielefeld, Bielefeld, Germany.
 Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
 
 Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -135,6 +262,8 @@ OpenModelica Contributors 2013
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
 Adeel Asghar, PELAB, Linköping University, Linköping, Sweden.
@@ -148,6 +277,8 @@ Lennart Ochel, Fachhochschule Bielefeld, Bielefeld, Germany.
 Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
 
 Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -256,6 +387,8 @@ OpenModelica Contributors 2012
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
 Adeel Asghar, PELAB, Linköping University, Linköping, Sweden.
@@ -269,6 +402,8 @@ Lennart Ochel, Fachhochschule Bielefeld, Bielefeld, Germany.
 Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
 
 Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -379,6 +514,8 @@ OpenModelica Contributors 2011
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
 Willi Braun, Fachhochschule Bielefeld, Bielefeld, Germany.
@@ -388,6 +525,8 @@ Jens Frenkel, TU Dresden, Dresden, Germany.
 Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
 
 Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -512,11 +651,15 @@ OpenModelica Contributors 2010
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
 Martin Sjölund, PELAB, Linköping University, Linköping, Sweden.
 
 Per Östlund, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -635,6 +778,8 @@ Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
 David Akhvlediani, PELAB, Linköping University, Linköping, Sweden.
@@ -727,7 +872,11 @@ OpenModelica Contributors 2008
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -774,7 +923,11 @@ OpenModelica Contributors 2007
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
@@ -819,9 +972,13 @@ OpenModelica Contributors 2006
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Peter Aronsson, MathCore Engineering AB, Linköping, Sweden.
 
 Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 David Akhvlediani, PELAB, Linköping University, Linköping, Sweden.
 
@@ -855,6 +1012,8 @@ Adrian Pop, PELAB, Linköping University, Linköping, Sweden.
 
 Håkan Lundvall, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Ingemar Axelsson, PELAB, Linköping University, Linköping, Sweden.
 
 David Broman, PELAB, Linköping University, Linköping, Sweden.
@@ -873,6 +1032,8 @@ OpenModelica Contributors 2004
 ------------------------------
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, Linköping University, Linköping, Sweden.
 
@@ -903,6 +1064,8 @@ Peter Aronsson, Linköping University, Linköping, Sweden.
 
 Levon Saldamli, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Peter Bunus, PELAB, Linköping University, Linköping, Sweden.
 
 Vadim Engelson, PELAB, Linköping University, Linköping, Sweden.
@@ -923,7 +1086,11 @@ OpenModelica Contributors 2002
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
 
+|
+
 Levon Saldamli, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Peter Aronsson, Linköping University, Linköping, Sweden.
 
@@ -937,6 +1104,8 @@ OpenModelica Contributors 2001
 ------------------------------
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 Levon Saldamli, PELAB, Linköping University, Linköping, Sweden.
 
@@ -952,12 +1121,16 @@ OpenModelica Contributors 1999
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden
 
+|
+
 Peter Rönnquist, PELAB, Linköping University, Linköping, Sweden.
 
 OpenModelica Contributors 1998
 ------------------------------
 
 Peter Fritzson, PELAB, Linköping University, Linköping, Sweden.
+
+|
 
 David Kågedal, PELAB, Linköping University, Linköping, Sweden.
 

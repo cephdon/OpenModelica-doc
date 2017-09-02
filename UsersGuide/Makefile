@@ -26,42 +26,46 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) sou
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 
-.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest coverage gettext readme
+.PHONY: help clean html htmlmathpng dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest coverage gettext readme
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  html       to make standalone HTML files"
-	@echo "  dirhtml    to make HTML files named index.html in directories"
-	@echo "  singlehtml to make a single large HTML file"
-	@echo "  pickle     to make pickle files"
-	@echo "  json       to make JSON files"
-	@echo "  htmlhelp   to make HTML files and a HTML help project"
-	@echo "  qthelp     to make HTML files and a qthelp project"
-	@echo "  applehelp  to make an Apple Help Book"
-	@echo "  devhelp    to make HTML files and a Devhelp project"
-	@echo "  epub       to make an epub"
-	@echo "  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
-	@echo "  latexpdf   to make LaTeX files and run them through pdflatex"
-	@echo "  latexpdfja to make LaTeX files and run them through platex/dvipdfmx"
-	@echo "  text       to make text files"
-	@echo "  man        to make manual pages"
-	@echo "  texinfo    to make Texinfo files"
-	@echo "  info       to make Texinfo files and run them through makeinfo"
-	@echo "  gettext    to make PO message catalogs"
-	@echo "  changes    to make an overview of all changed/added/deprecated items"
-	@echo "  xml        to make Docutils-native XML files"
-	@echo "  pseudoxml  to make pseudoxml-XML files for display purposes"
-	@echo "  linkcheck  to check all external links for integrity"
-	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
-	@echo "  coverage   to run coverage check of the documentation (if enabled)"
+	@echo "  html           to make standalone HTML files"
+	@echo "  htmlmathpng    to make standalone HTML files using dvipng instead of dvisvgm"
+	@echo "  dirhtml        to make HTML files named index.html in directories"
+	@echo "  singlehtml     to make a single large HTML file"
+	@echo "  pickle         to make pickle files"
+	@echo "  json           to make JSON files"
+	@echo "  htmlhelp       to make HTML files and a HTML help project"
+	@echo "  qthelp         to make HTML files and a qthelp project"
+	@echo "  applehelp      to make an Apple Help Book"
+	@echo "  devhelp        to make HTML files and a Devhelp project"
+	@echo "  epub           to make an epub"
+	@echo "  latex          to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
+	@echo "  latexpdf       to make LaTeX files and run them through pdflatex"
+	@echo "  latexpdfja     to make LaTeX files and run them through platex/dvipdfmx"
+	@echo "  text           to make text files"
+	@echo "  man            to make manual pages"
+	@echo "  texinfo        to make Texinfo files"
+	@echo "  info           to make Texinfo files and run them through makeinfo"
+	@echo "  gettext        to make PO message catalogs"
+	@echo "  changes        to make an overview of all changed/added/deprecated items"
+	@echo "  xml            to make Docutils-native XML files"
+	@echo "  pseudoxml      to make pseudoxml-XML files for display purposes"
+	@echo "  linkcheck      to check all external links for integrity"
+	@echo "  doctest        to run all doctests embedded in the documentation (if enabled)"
+	@echo "  coverage       to run coverage check of the documentation (if enabled)"
 
 clean:
 	rm -rf $(BUILDDIR)/*
 
-html: dvisvgm.sh all-dep
-	test -f dvisvgm.sh
-	$(SPHINXBUILD) -b html -t nomathjax -D pngmath_dvipng="`pwd`"/dvisvgm.sh $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	./fix-math.sh build/html/*.html
+html: all-dep
+	$(SPHINXBUILD) -b html -t nomathjax $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+htmlmathpng: all-dep
+	$(SPHINXBUILD) -b html -t nomathjax $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
@@ -209,7 +213,7 @@ addedPdfs: $(ADDED_SVGS:%.svg=%.pdf)
 pdf: latex
 	$(MAKE) addedPdfs
 	sed -i "s/usepackage.utf8..inputenc./usepackage[utf8x]{inputenc}/" build/latex/OpenModelicaUsersGuide.tex
-	sed -i "/DeclareUnicodeCharacter/d" build/latex/OpenModelicaUsersGuide.tex
+	sed -i -e "/^ *\\\\DeclareUnicodeCharacter/d" build/latex/OpenModelicaUsersGuide.tex
 	# sphinx seems to only handle .* extension for images?
 	sed -i "s,{\(media/[A-Za-z_0-9.-]*\)[.][*],{`pwd`/source/\1.pdf,g" build/latex/OpenModelicaUsersGuide.tex
 	sed -i "s,{ProfilingTest_prof[.]\([^.]*\)[.]thumb[.]svg,{`pwd`/source/ProfilingTest_prof-\1-thumb.pdf,g" build/latex/OpenModelicaUsersGuide.tex
@@ -228,7 +232,7 @@ source/interface.inc: interface.mos
 	$(OPENMODELICA_ROOT)/build/bin/omc +g=MetaModelica +d=nogen interface.mos
 	mv interface.inc $@
 
-OMEDIT_ICONS_BASE=connect-mode.svg parametric-plot-window.svg plot-window.svg re-simulate.svg
+OMEDIT_ICONS_BASE=connect-mode.svg transition-mode.svg parametric-plot-window.svg plot-window.svg re-simulate.svg tlm-simulate.svg interface-data.svg simulation-parameters.svg
 OMEDIT_ICONS_SVG=$(OMEDIT_ICONS_BASE:%=source/media/omedit-icons/%)
 OMEDIT_ICONS_PDF=$(OMEDIT_ICONS_SVG:%.svg=%.pdf)
 OMEDIT_ICONS_PNG=$(OMEDIT_ICONS_SVG:%.svg=%.png)
@@ -237,7 +241,7 @@ OMEDIT_ICONS=$(OMEDIT_ICONS_SVG) $(OMEDIT_ICONS_PNG) $(OMEDIT_ICONS_PDF)
 OMOPTIM_ICONS_BASE=Add.png
 OMOPTIM_ICONS=$(OMOPTIM_ICONS_BASE:%=source/media/omoptim-icons/%)
 
-all-dep: $(ALLDEP) source/media/mathematica-notebooks.pdf source/media/mdt-create-project.pdf source/media/mdt-build-prompt.pdf source/simoptions.inc source/omchelptext.rst
+all-dep: $(ALLDEP) source/media/mathematica-notebooks.pdf source/media/mdt-create-project.pdf source/media/mdt-build-prompt.pdf source/simoptions.inc source/omchelptext.rst source/tracreleases.rst
 
 source/media/omedit-icons/%.svg: $(OPENMODELICA_ROOT)/OMEdit/OMEdit/OMEditGUI/Resources/icons/%.svg
 	@mkdir -p source/media/omedit-icons
@@ -263,3 +267,5 @@ source/simoptions.inc:
 source/omchelptext.rst:
 	$(OPENMODELICA_ROOT)/build/bin/omc +help=omcall-sphinxoutput > "$@.tmp"
 	mv "$@.tmp" "$@"
+source/tracreleases.rst: source/tracreleases.py
+	cd source && python ./tracreleases.py

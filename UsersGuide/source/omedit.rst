@@ -3,8 +3,8 @@ OMEdit – OpenModelica Connection Editor
 
 OMEdit – OpenModelica Connection Editor is the new Graphical User
 Interface for graphical model editing in OpenModelica. It is implemented
-in C++ using the Qt 4.8 graphical user interface library and supports
-the Modelica Standard Library version 3.1 that is included in the latest
+in C++ using the Qt graphical user interface library and supports
+the Modelica Standard Library that is included in the latest
 OpenModelica installation. This chapter gives a brief introduction to
 OMEdit and also demonstrates how to create a DCMotor model using the
 editor.
@@ -65,8 +65,6 @@ MainWindow & Browsers
 
 The MainWindow contains several dockable browsers,
 
--  Search Browser
-
 -  Libraries Browser
 
 -  Documentation Browser
@@ -84,29 +82,22 @@ The MainWindow contains several dockable browsers,
 
 The default location of the browsers are shown in :numref:`omedit-mainwindow-browsers`.
 All browsers except for Message Browser can be docked into left or right
-column. The Messages Browser can be docked into left,right or bottom
+column. The Messages Browser can be docked into top or bottom
 areas. If you want OMEdit to remember the new docked position of the
 browsers then you must enable Preserve User's GUI Customizations option,
 see section :ref:`omedit-settings-general`.
 
-Search Browser
+Filter Classes
 ~~~~~~~~~~~~~~
 
-.. figure :: media/omedit-search-browser.png
-
-  Search Browser.
-
-To view the Search Browser click Edit->Search Browser or press keyboard
-shortcut Ctrl+Shift+F. The loaded Modelica classes can be searched by
-typing any part of the class name. It is also possible to search the
-Modelica class if one knows the text string that is used within it but
-Within Modelica text checkbox should be checked for this feature to
-work.
+To filter a class click Edit > Filter Classes or press keyboard
+shortcut Ctrl+Shift+F. The loaded Modelica classes can be filtered by
+typing any part of the class name.
 
 Libraries Browser
 ~~~~~~~~~~~~~~~~~
 
-To view the Libraries Browser click View->Windows->Libraries Browser.
+To view the Libraries Browser click View > Windows > Libraries Browser.
 Shows the list of loaded Modelica classes. Each item of the Libraries
 Browser has right click menu for easy manipulation and usage of the
 class. The classes are shown in a tree structure with name and icon. The
@@ -122,9 +113,10 @@ Documentation Browser
 ~~~~~~~~~~~~~~~~~~~~~
 
 Displays the HTML documentation of Modelica classes. It contains the
-navigation buttons for moving forward and backward. To see documentation
-of any class, right click the Modelica class in Libraries Browser and
-choose View Documentation.
+navigation buttons for moving forward and backward. It also contains
+a WYSIWYG editor which allows writing class documentation in HTML format.
+To see documentation of any class, right click the Modelica class
+in Libraries Browser and choose View Documentation.
 
 .. figure :: media/omedit-documentation-browser.png
 
@@ -181,6 +173,8 @@ The perspective tabs are loacted at the bottom right of the MainWindow:
 
 -  Plotting Perspective
 
+-  Debugging Perspective
+
 Welcome Perspective
 ~~~~~~~~~~~~~~~~~~~
 
@@ -225,10 +219,24 @@ two different modes, the tabbed view and subwindow view, see section
 
   OMEdit Plotting Perspective.
 
+Debugging Perspective
+~~~~~~~~~~~~~~~~~~~~~
+
+The application automatically switches to Debugging Perpective
+when user simulates the class with algorithmic debugger.
+The prespective shows the list of stack frames, breakpoints and variables.
+
+.. figure :: media/omedit-debugging-perspective.png
+  :name: omedit-debugging-perspective
+
+  OMEdit Debugging Perspective.
+
 Modeling a Model
 ----------------
 
-Creating a New Modelica class
+.. _creating-new-class :
+
+Creating a New Modelica Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Creating a new Modelica class in OMEdit is rather straightforward.
@@ -239,7 +247,7 @@ Choose any of the following methods,
 -  Click on New Modelica Class toolbar button.
 
 -  Click on the Create New Modelica Class button available at the left
-       bottom of Welcome Perspective.
+   bottom of Welcome Perspective.
 
 -  Press Ctrl+N.
 
@@ -253,9 +261,11 @@ Choose any of the following methods to open a Modelica file,
 -  Click on Open Model/Library File(s) toolbar button.
 
 -  Click on the Open Model/Library File(s) button available at the right
-       bottom of Welcome Perspective.
+   bottom of Welcome Perspective.
 
 -  Press Ctrl+O.
+
+(Note, for editing Modelica system files like MSL (not recommended), see :ref:`editingMSL`)
 
 Opening a Modelica File with Encoding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -288,6 +298,10 @@ Making Connections
 In order to connect one component model to another the user first needs
 to enable the connect mode (|connect-mode|) from the toolbar.
 
+Move the mouse over the connector. The mouse cursor will change from arrow cursor to cross cursor.
+To start the connection press left button and move while keeping the button pressed. Now release the left button.
+Move towards the end connector and click when cursor changes to cross cursor.
+
 .. |connect-mode| image:: media/omedit-icons/connect-mode.*
   :height: 14pt
   :alt: OMEdit connect mode icon
@@ -298,47 +312,73 @@ Simulating a Model
 The OMEdit Simulation Dialog can be launched by,
 
 -  Selecting Simulation > Simulation Setup from the menu. (requires a
-       model to be active in ModelWidget)
+   model to be active in ModelWidget)
 
 -  Clicking on the Simulation Setup toolbar button. (requires a model to
-       be active in ModelWidget)
+   be active in ModelWidget)
 
 -  Right clicking the model from the Libraries Browser and choosing
-       Simulation Setup.
+   Simulation Setup.
 
 General Tab
 ~~~~~~~~~~~
 
--  *Start Time* – the simulation start time.
+-  Simulation Interval
 
--  *Stop Time* – the simulation stop time.
+  -  *Start Time* – the simulation start time.
 
--  *Method* – the simulation solver. See section :ref:`cruntime-integration-methods` for solver details.
+  -  *Stop Time* – the simulation stop time.
 
--  *Tolerance* – the simulation tolerance.
+  -  *Number of Intervals* – the simulation number of intervals.
+
+  -  *Interval* – the length of one interval (i.e., stepsize)
+
+-  Integration
+
+  -  *Method* – the simulation solver. See section :ref:`cruntime-integration-methods` for solver details.
+
+  -  *Tolerance* – the simulation tolerance.
+
+  -  *Jacobian* - the jacobain method to use.
+
+  -  DASSL/IDA Options
+
+    -  *Root Finding* - Activates the internal root finding procedure of dassl.
+
+    -  *Restart After Event* - Activates the restart of dassl after an event is performed.
+
+    -  *Initial Step Size*
+
+    -  *Maximum Step Size*
+
+    -  *Maximum Integration Order*
 
 -  *Compiler Flags (Optional)* – the optional C compiler flags.
 
--  *Number of Processors* – the number of processors used to build the
-       simulation.
+-  *Number of Processors* – the number of processors used to build the simulation.
 
--  *Launch Transformational Debugger* – launches the transformational
-       debugger.
+-  *Build Only* – only builds the class.
+
+-  *Launch Transformational Debugger* – launches the transformational debugger.
 
 -  *Launch Algorithmic Debugger* – launches the algorithmic debugger.
+
+-  *Launch Animation* – launches the 3d animation window.
 
 Output Tab
 ~~~~~~~~~~
 
--  *Number of Intervals* – the simulation number of intervals.
-
 -  *Output Format* – the simulation result file output format.
 
--  *File Name (Optional)* – the simulation result file name.
+-  *File Name Prefix (Optional)* – the name is used as a prefix for the output files.
 
--  *Variable Filter (Optional).*
+-  *Result File (Optional)* - the simulation result file name.
+
+-  *Variable Filter (Optional)*
 
 -  *Protected Variables –* adds the protected variables in result file.
+
+-  *Equidistant Time Grid –* output the internal steps given by dassl instead of interpolating results into an equidistant time grid as given by stepSize or numberOfIntervals
 
 -  *Store Variables at Events –* adds the variables at time events.
 
@@ -347,17 +387,15 @@ Output Tab
 Simulation Flags Tab
 ~~~~~~~~~~~~~~~~~~~~
 
--  *Model Setup File (Optional)* – specifies a new setup XML file to the
-       generated simulation code.
+-  *Model Setup File (Optional)* – specifies a new setup XML file to the generated simulation code.
 
--  *Initialization Method (Optional)* – specifies the initialization
-       method.
+-  *Initialization Method (Optional)* – specifies the initialization method.
 
 -  *Equation System Initialization File (Optional)* – specifies an
-       external file for the initialization of the model.
+   external file for the initialization of the model.
 
 -  *Equation System Initialization Time (Optional)* – specifies a time
-       for the initialization of the model.
+   for the initialization of the model.
 
 -  *Clock (Optional)* – the type of clock to use.
 
@@ -366,10 +404,10 @@ Simulation Flags Tab
 -  *Non Linear Solver (Optional)* – specifies the nonlinear solver.
 
 -  *Linearization Time (Optional)* – specifies a time where the
-       linearization of the model should be performed.
+   linearization of the model should be performed.
 
 -  *Output Variables (Optional)* – outputs the variables a, b and c at
-       the end of the simulation to the standard output.
+   the end of the simulation to the standard output.
 
 -  *Profiling* – creates a profiling HTML file.
 
@@ -379,52 +417,49 @@ Simulation Flags Tab
 
 -  *Logging (Optional)*
 
--  *DASSL Solver Information* – prints additional information about
-   dassl solver.
-
--  *Debug* – prints additional debug information.
-
--  *Dynamic State Selection Information* – outputs information about
-   dynamic state selection.
-
--  *Jacobians Dynamic State Selection Information* – outputs jacobain of
-   the dynamic state selection.
-
--  *Event Iteration* – additional information during event iteration.
-
--  *Verbose Event System* – verbose logging of event system.
-
--  *Initialization* – prints additional information during
-   initialization.
-
--  *Jacobians Matrix* – outputs the jacobian matrix used by dassl.
-
--  *Non Linear Systems* – logging for nonlinear systems.
-
--  *Verbose Non Linear Systems* – verbose logging of nonlinear systems.
-
--  *Jacobians Non Linear Systems* – outputs the jacobian of nonlinear
-   systems.
-
--  *Initialization Residuals* – outputs residuals of the initialization.
-
--  *Simulation Process* – additional information about simulation
-   process.
-
--  *Solver Process* – additional information about solver process.
-
--  *Final Initialization Solution* – final solution of the
-   initialization.
-
--  *Timer/Event/Solver Statistics* – additional statistics about
-   timer/events/solver.
-
--  *Util*.
-
--  *Zero Crossings* – additional information about the zerocrossings.
+  -  *LOG_DASSL* - additional information about dassl solver.
+  -  *LOG_DASSL_STATES* - outputs the states at every dassl call.
+  -  *LOG_DEBUG* - additional debug information.
+  -  *LOG_DSS* - outputs information about dynamic state selection.
+  -  *LOG_DSS_JAC* - outputs jacobian of the dynamic state selection.
+  -  *LOG_DT* - additional information about dynamic tearing.
+  -  *LOG_EVENTS* - additional information during event iteration.
+  -  *LOG_EVENTS_V* - verbose logging of event system.
+  -  *LOG_INIT* - additional information during initialization.
+  -  *LOG_IPOPT* - information from Ipopt.
+  -  *LOG_IPOPT_FULL* - more information from Ipopt.
+  -  *LOG_IPOPT_JAC* - check jacobian matrix with Ipopt.
+  -  *LOG_IPOPT_HESSE* - check hessian matrix with Ipopt.
+  -  *LOG_IPOPT_ERROR* - print max error in the optimization.
+  -  *LOG_JAC* - outputs the jacobian matrix used by dassl.
+  -  *LOG_LS* - logging for linear systems.
+  -  *LOG_LS_V* - verbose logging of linear systems.
+  -  *LOG_NLS* - logging for nonlinear systems.
+  -  *LOG_NLS_V* - verbose logging of nonlinear systems.
+  -  *LOG_NLS_HOMOTOPY* - logging of homotopy solver for nonlinear systems.
+  -  *LOG_NLS_JAC* - outputs the jacobian of nonlinear systems.
+  -  *LOG_NLS_JAC_TEST* - tests the analytical jacobian of nonlinear systems.
+  -  *LOG_NLS_RES* - outputs every evaluation of the residual function.
+  -  *LOG_NLS_EXTRAPOLATE* - outputs debug information about extrapolate process.
+  -  *LOG_RES_INIT* - outputs residuals of the initialization.
+  -  *LOG_RT* - additional information regarding real-time processes.
+  -  *LOG_SIMULATION* - additional information about simulation process.
+  -  *LOG_SOLVER* - additional information about solver process.
+  -  *LOG_SOLVER_CONTEXT* - context information during the solver process.
+  -  *LOG_SOTI* - final solution of the initialization.
+  -  *LOG_STATS* - additional statistics about timer/events/solver.
+  -  *LOG_STATS_V* - additional statistics for LOG_STATS.
+  -  *LOG_UTIL*.
+  -  *LOG_ZEROCROSSINGS* - additional information about the zerocrossings.
 
 -  *Additional Simulation Flags (Optional)* – specify any other
-       simulation flag.
+   simulation flag.
+
+Archived Simulations Tab
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Shows the list of simulations already finished or running.
+Double clicking on any of them opens the simulation output window.
 
 Plotting the Simulation Results
 -------------------------------
@@ -475,6 +510,92 @@ re-simulate from the menu.
 .. |re-simulate| image:: media/omedit-icons/re-simulate.*
   :alt: OMEdit Re-simulate button
   :height: 14pt
+
+3D Visualization
+----------------
+
+.. highlight:: modelica
+
+Since OpenModelica 1.11 , OMEdit has built-in 3D visualization,
+which replaces third-party libraries (such as `Modelica3D
+<https://github.com/OpenModelica/Modelica3D>`_) for 3D visualization.
+
+Running a Visualization
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The 3d visualization is based on OpenSceneGraph. In order to run the
+visualization simply right click the class in Libraries Browser an
+choose “\ **Simulate with Animation**\ ” as shown in :numref:`omedit-simulate-animation`.
+
+.. figure :: media/omedit_simulate_animation.png
+  :name: omedit-simulate-animation
+
+  OMEdit Simulate with Animation.
+
+One can also run the visualization via Simulation > Simulate with Animation from the menu.
+
+When simulating a model in animation mode, the flag *+d=visxml* is set.
+Hence, the compiler will generate a scene description file *_visual.xml* which stores all information on the multibody shapes.
+This scene description references all variables which are needed for the animation of the multibody system.
+When simulating with *+d=visxml*, the compiler will always generate results for these variables.
+
+Viewing a Visualization
+^^^^^^^^^^^^^^^^^^^^^^^
+
+After the successful simulation of the model, the visualization window will
+show up automatically as shown in :numref:`omedit-visualization`.
+
+.. figure :: media/omedit_visualization.png
+  :name: omedit-visualization
+
+  OMEdit 3D Visualization.
+
+The animation starts with pushing the *play* button. The animation is played until stopTime or until the *pause* button is pushed.
+By pushing the *previous* button, the animation jumps to the initial point of time.
+Points of time can be selected by moving the *time slider* or by inserting a simulation time in the *Time-box*.
+The speed factor of animation in relation to realtime can be set in the *Speed-dialog*.
+Other animations can be openend by using the *open file* button and selecting a result file with a corresping scene description file.
+
+The 3D camera view can be manipulated as follows:
+
+========================  ============================== ========================
+  Operation                Key                            Mouse Action
+========================  ============================== ========================
+Move Closer/Further        none                           Wheel
+Move Closer/Further        Right Mouse Hold               Up/Down
+Move Up/Down/Left/Right    Middle Mouse Hold              Move Mouse
+Move Up/Down/Left/Right    Left and Right Mouse Hold      Move Mouse
+Rotate                     Left Mouse Hold                Move Mouse
+Shape context menu         Right Mouse + Shift
+========================  ============================== ========================
+
+Predefined views (Isometric, Side, Front, Top) can be selected and the scene can be tilted by 90° either clock or anticlockwise with the rotation buttons.
+
+Additional Visualization Features
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The shapes that are displayed in the viewer can be selected with shift + right click.
+If a shape is selected, a context menu pops up that offers additional visualization features
+
+.. figure :: media/pick_shape.png
+  :name: A context menu to set additional visualization features for the selected shape.
+
+The following features can be selected:
+
+========================  ================================================================================================
+  Menu                      Description
+========================  ================================================================================================
+Change Transparency       The shape becomes either transparent or intransparent.
+Make Shape Invisible      The shape becomes invisible.
+Change Color              A color dialog pops up and the color of the shape can be set.
+Apply Check Texture       A checked texture is applied to the shape.
+Apply Custom Texture      A file selection dialog pops up and an image file can be selected as a texture.
+Remove Texture            Removes the current texture of the shape.
+========================  ================================================================================================
+
+|
+.. figure :: media/visual_features.png
+  :name: Different visualization features.
+
 
 How to Create User Defined Shapes – Icons
 -----------------------------------------
@@ -541,6 +662,60 @@ added to the icon annotation of the model. Similarly, any user defined
 shape drawn on a Diagram View of the model will be added to the diagram
 annotation of the model.
 
+Global head section in documentation
+------------------------------------
+
+If you want to use same styles or same JavaScript for the classes contained inside a package then
+you can define ``__OpenModelica_infoHeader`` annotation inside the ``Documentation`` annotation of a package.
+For example,
+
+.. code-block :: modelica
+
+  package P
+    model M
+      annotation(Documentation(info="<html>
+        <a href=\"javascript:HelloWorld()\">Click here</a>
+      </html>"));
+    end M;
+   annotation(Documentation(__OpenModelica_infoHeader="
+       <script type=\"text/javascript\">
+         function HelloWorld() {
+           alert(\"Hello World!\");
+         }
+       </script>"));
+  end P;
+
+In the above example model ``M`` does not need to define the javascript function ``HelloWorld``.
+It is only defined once at the package level using the ``__OpenModelica_infoHeader`` and then all classes
+contained in the package can use it.
+
+In addition styles and JavaScript can be added from file locations using Modelica URIs.
+Example:
+
+.. code-block :: modelica
+
+  package P
+    model M
+      annotation(Documentation(info="<html>
+        <a href=\"javascript:HelloWorld()\">Click here</a>
+      </html>"));
+    end M;
+   annotation(Documentation(__OpenModelica_infoHeader="
+       <script type=\"text/javascript\">
+          src=\"modelica://P/Resources/hello.js\">
+         }
+       </script>"));
+  end P;
+
+Where the file ``Resources/hello.js`` then contains:
+
+.. code-block :: javascript
+
+  function HelloWorld() {
+    alert("Hello World!");
+  }
+
+
 Settings
 --------
 
@@ -555,115 +730,181 @@ General
 
 -  General
 
--  *Language* – Sets the application language.
+  -  *Language* – Sets the application language.
 
--  *Working Directory* – Sets the application working directory.
+  -  *Working Directory* – Sets the application working directory.
+     All files are generated in this directory.
 
--  *Toolbar Icon Size* – Sets the size for toolbar icons.
+  -  *Toolbar Icon Size* – Sets the size for toolbar icons.
 
--  *Preserve User’s GUI Customizations* – If true then OMEdit will
-   remember its windows and toolbars positions and sizes.
+  -  *Preserve User’s GUI Customizations* – If true then OMEdit will
+     remember its windows and toolbars positions and sizes.
+
+  -  *Terminal Command* – Sets the terminal command.
+     When user clicks on Tools > Open Terminal then this command is executed.
+
+  -  *Terminal Command Arguments* – Sets the terminal command arguments.
+
+  -  *Hide Variables Browser* – Hides the variable browser when switching away from plotting perspective.
 
 -  Libraries Browser
 
--  *Library Icon Size* – Sets the size for library icons.
+  -  *Library Icon Size* – Sets the size for library icons.
 
--  *Show Protected Classes* – Sets the application language.
+  -  *Show Protected Classes* – If enabled then Libraries Browser will also list the protected classes.
 
 -  Modeling View Mode
 
--  *Tabbed View/SubWindow View* – Sets the view mode for modeling.
-
--  Plotting View Mode
-
--  *Tabbed View/SubWindow View* – Sets the view mode for plotting.
+  -  *Tabbed View/SubWindow View* – Sets the view mode for modeling.
 
 -  Default View
 
--  *Icon View/DiagramView/Modelica Text View/Documentation View* – If no
-   preferredView annotation is defined then this setting is used to show
-   the respective view when user double clicks on the class in the
-   Libraries Browser.
+  -  *Icon View/DiagramView/Modelica Text View/Documentation View* – If no
+     preferredView annotation is defined then this setting is used to show
+     the respective view when user double clicks on the class in the
+     Libraries Browser.
 
 -  Enable Auto Save
 
--  *Auto Save interval* – Sets the auto save interval value. The minimum
-   possible interval value is 60 seconds.
+  -  *Auto Save interval* – Sets the auto save interval value. The minimum
+     possible interval value is 60 seconds.
 
--  *Enable Auto Save for single classes* – Enables the auto save for one
-   class saved in one file.
+  -  *Enable Auto Save for single classes* – Enables the auto save for one
+     class saved in one file.
 
--  *Enable Auto Save for one file packages* – Enables the auto save for
-   packages saved in one file.
+  -  *Enable Auto Save for one file packages* – Enables the auto save for
+     packages saved in one file.
 
 -  Welcome Page
 
--  *Horizontal View/Vertical View* – Sets the view mode for welcome
-   page.
+  -  *Horizontal View/Vertical View* – Sets the view mode for welcome page.
 
--  *Show Latest News –* if true then displays the latest news.
+  -  *Show Latest News –* if true then displays the latest news.
 
 Libraries
 ~~~~~~~~~
 
 -  *System Libraries* – The list of system libraries that should be
-       loaded every time OMEdit starts.
+   loaded every time OMEdit starts.
 
 -  *Force loading of Modelica Standard Library* – If true then Modelica
-       and ModelicaReference will always load even if user has removed
-       them from the list of system libraries.
+   and ModelicaReference will always load even if user has removed
+   them from the list of system libraries.
+
+-  *Load OpenModelica library on startup* – If true then OpenModelica
+   package will be loaded when OMEdit is started.
 
 -  *User Libraries* – The list of user libraries/files that should be
-       loaded every time OMEdit starts.
+   loaded every time OMEdit starts.
 
-Modelica Text Editor
-~~~~~~~~~~~~~~~~~~~~
+Text Editor
+~~~~~~~~~~~
+-  Format
 
--  General
+  -  *Line Ending* - Sets the file line ending.
 
--  *Enable Syntax Highlighting* – Enable/Disable the syntax highlighting
-   for the Modelica Text Widget.
+  -  *Byte Order Mark (BOM)* - Sets the file BOM.
 
--  *Enable Line Wrapping* – Enable/Disable the line wrapping for the
-   Modelica Text Widget.
+-  Tabs and Indentation
 
--  Fonts and Colors
+  -  *Tab Policy* – Sets the tab policy to either spaces or tabs only.
 
--  *Font Family* – Contains the names list of available fonts.
+  -  *Tab Size* – Sets the tab size.
 
--  *Font Size* – Sets the font size.
+  -  *Indent Size* – Sets the indent size.
 
--  *Items* – List of categories used of syntax highlighting the code.
+-  Syntax Highlight and Text Wrapping
 
--  *Item Color* – Sets the color for the selected item.
+  -  *Enable Syntax Highlighting* – Enable/Disable the syntax highlighting.
 
--  *Preview* – Shows the demo of the syntax highlighting.
+    -  *Enable Code Folding* - Enable/Disable the code folding. When code
+       folding is enabled multi-line annotations are collapsed into a
+       compact icon (a rectangle containing "...)"). A marker containing
+       a "+" sign becomes available at the left-side of the involved line,
+       allowing the code to be expanded/re-collapsed at will.
+
+    -  *Match Parentheses within Comments and Quotes* – Enable/Disable the matching of parentheses within comments and quotes.
+
+  -  *Enable Line Wrapping* – Enable/Disable the line wrapping.
+
+-  Font
+
+  -  *Font Family* – Shows the names list of available fonts.
+     Sets the font for the editor.
+
+  -  *Font Size* – Sets the font size for the editor.
+
+Modelica Editor
+~~~~~~~~~~~~~~~
+
+-  *Preserve Text Indentation* – If true then uses *diffModelicaFileListings* API call otherwise uses the OMC pretty-printing.
+
+-  Colors
+
+  -  *Items* – List of categories used of syntax highlighting the code.
+
+  -  *Item Color* – Sets the color for the selected item.
+
+  -  *Preview* – Shows the demo of the syntax highlighting.
+
+MetaModelica Editor
+~~~~~~~~~~~~~~~~~~~
+
+-  Colors
+
+  -  *Items* – List of categories used of syntax highlighting the code.
+
+  -  *Item Color* – Sets the color for the selected item.
+
+  -  *Preview* – Shows the demo of the syntax highlighting.
+
+CompositeModel Editor
+~~~~~~~~~~~~~~~~~~~~~
+
+-  Colors
+
+  -  *Items* – List of categories used of syntax highlighting the code.
+
+  -  *Item Color* – Sets the color for the selected item.
+
+  -  *Preview* – Shows the demo of the syntax highlighting.
+
+C/C++ Editor
+~~~~~~~~~~~~
+
+-  Colors
+
+  -  *Items* – List of categories used of syntax highlighting the code.
+
+  -  *Item Color* – Sets the color for the selected item.
+
+  -  *Preview* – Shows the demo of the syntax highlighting.
 
 Graphical Views
 ~~~~~~~~~~~~~~~
 
 -  Extent
 
--  *Left* – Defines the left extent point for the view.
+  -  *Left* – Defines the left extent point for the view.
 
--  *Bottom* – Defines the bottom extent point for the view.
+  -  *Bottom* – Defines the bottom extent point for the view.
 
--  *Right* – Defines the right extent point for the view.
+  -  *Right* – Defines the right extent point for the view.
 
--  *Top* – Defines the top extent point for the view.
+  -  *Top* – Defines the top extent point for the view.
 
 -  Grid
 
--  *Horizontal* – Defines the horizontal size of the view grid.
+  -  *Horizontal* – Defines the horizontal size of the view grid.
 
--  *Vertical* – Defines the vertical size of the view grid.
+  -  *Vertical* – Defines the vertical size of the view grid.
 
 -  Component
 
--  *Scale factor* – Defines the initial scale factor for the component
+  -  *Scale factor* – Defines the initial scale factor for the component
    dragged on the view.
 
--  *Preserve aspect ratio* – If true then the component’s aspect ratio
+  -  *Preserve aspect ratio* – If true then the component’s aspect ratio
    is preserved while scaling.
 
 .. _omedit-settings-simulation :
@@ -673,23 +914,36 @@ Simulation
 
 -  Simulation
 
--  *Matching Algorithm* – sets the matching algorithm for simulation.
+  -  *Matching Algorithm* – sets the matching algorithm for simulation.
 
--  *Index Reduction Method* – sets the index reduction method for
-   simulation.
+  -  *Index Reduction Method* – sets the index reduction method for
+     simulation.
 
--  *OMC Flags* – sets the omc flags for simulation.
+  -  *Target Language* – sets the target language in which the code is generated.
 
--  *Save class before simulation* – if ture then always saves the class
-   before running the simulation.
+  -  *Target Compiler* – sets the target compiler for compiling the generated code.
 
--  Output
+  -  *OMC Flags* – sets the omc flags for simulation.
 
--  *Structured –* Shows the simulation output in the form of tree
-   structure.
+  -  *Ignore __OpenModelica_commandLineOptions annotation* – if ture then ignores the __OpenModelica_commandLineOptions
+     annotation while running the simulation.
 
--  *Formatted Text –* Shows the simulation output in the form of
-   formatted text.
+  -  *Ignore __OpenModelica_simulationFlags annotation* – if ture then ignores the __OpenModelica_simulationFlags
+     annotation while running the simulation.
+
+  -  *Save class before simulation* – if ture then always saves the class
+     before running the simulation.
+
+  -  *Switch to plotting perspective after simulation* – if ture then GUI always switches to plotting
+     perspective after the simulation.
+
+  -  Output
+
+    -  *Structured –* Shows the simulation output in the form of tree
+       structure.
+
+    -  *Formatted Text –* Shows the simulation output in the form of
+       formatted text.
 
 .. _omedit-settings-messages :
 
@@ -698,97 +952,107 @@ Messages
 
 -  General
 
--  *Output Size* - Specifies the maximum number of rows the Messages
-   Browser may have. If there are more rows then the rows are removed
-   from the beginning.
+  -  *Output Size* - Specifies the maximum number of rows the Messages
+     Browser may have. If there are more rows then the rows are removed
+     from the beginning.
 
--  *Reset messages number before simulation* – Resets the messages
-   counter before starting the simulation.
+  -  *Reset messages number before simulation* – Resets the messages
+     counter before starting the simulation.
 
 -  Font and Colors
 
--  *Font Family* – Sets the font for the messages.
+  -  *Font Family* – Sets the font for the messages.
 
--  *Font Size –* Sets the font size for the messages.
+  -  *Font Size –* Sets the font size for the messages.
 
--  *Notification Color* – Sets the text color for notification messages.
+  -  *Notification Color* – Sets the text color for notification messages.
 
--  *Warning Color* – Sets the text color for warning messages.
+  -  *Warning Color* – Sets the text color for warning messages.
 
--  *Error Color* – Sets the text color for error messages.
+  -  *Error Color* – Sets the text color for error messages.
 
 Notifications
 ~~~~~~~~~~~~~
 
 -  Notifications
 
--  *Always quit without prompt* – If true then OMEdit will quit without
-   prompting the user.
+  -  *Always quit without prompt* – If true then OMEdit will quit without
+     prompting the user.
 
--  *Show item dropped on itself message* – If true then a message will
-   pop-up when a class is dragged and dropped on itself.
+  -  *Show item dropped on itself message* – If true then a message will
+     pop-up when a class is dragged and dropped on itself.
 
--  *Show model is defined as partial and component will be added as
-   replaceable message* – If true then a message will pop-up when a
-   partial class is added to another class.
+  -  *Show model is defined as partial and component will be added as
+     replaceable message* – If true then a message will pop-up when a
+     partial class is added to another class.
 
--  *Show component is declared as inner message* – If true then a
-   message will pop-up when an inner component is added to another
-   class.
+  -  *Show component is declared as inner message* – If true then a
+     message will pop-up when an inner component is added to another
+     class.
 
--  *Show save model for bitmap insertion message* – If true then a
-   message will pop-up when user tries to insert a bitmap from a local
-   directory to an unsaved class.
+  -  *Show save model for bitmap insertion message* – If true then a
+     message will pop-up when user tries to insert a bitmap from a local
+     directory to an unsaved class.
+
+  -  *Always ask for the dragged component name* – If true then a
+     message will pop-up when user drag & drop the component on the
+     graphical view.
 
 Line Style
 ~~~~~~~~~~
 
 -  Line Style
 
--  *Color* – Sets the line color.
+  -  *Color* – Sets the line color.
 
--  *Pattern* – Sets the line pattern.
+  -  *Pattern* – Sets the line pattern.
 
--  *Thickness* – Sets the line thickness.
+  -  *Thickness* – Sets the line thickness.
 
--  *Start Arrow* – Sets the line start arrow.
+  -  *Start Arrow* – Sets the line start arrow.
 
--  *End Arrow* – Sets the line end arrow.
+  -  *End Arrow* – Sets the line end arrow.
 
--  *Arrow Size* – Sets the start and end arrow size.
+  -  *Arrow Size* – Sets the start and end arrow size.
 
--  *Smooth* – If true then the line is drawn as a Bezier curve.
+  -  *Smooth* – If true then the line is drawn as a Bezier curve.
 
 Fill Style
 ~~~~~~~~~~
 
 -  Fill Style
 
--  *Color* – Sets the fill color.
+  -  *Color* – Sets the fill color.
 
--  *Pattern* – Sets the fill pattern.
+  -  *Pattern* – Sets the fill pattern.
 
-Curve Style
-~~~~~~~~~~~
+Plotting
+~~~~~~~~
+
+-  General
+
+  -  *Auto Scale* – sets whether to auto scale the plots or not.
+
+-  Plotting View Mode
+
+  -  *Tabbed View/SubWindow View* – Sets the view mode for plotting.
 
 -  Curve Style
 
--  *Pattern* – Sets the curve pattern.
+  -  *Pattern* – Sets the curve pattern.
 
--  *Thickness* – Sets the curve thickness.
+  -  *Thickness* – Sets the curve thickness.
 
 Figaro
 ~~~~~~
 
 -  Figaro
 
--  *Figaro Database File* – the Figaro database file path.
+  -  *Figaro Library* – the Figaro library file path.
 
--  *Figaro Mode* –
+  -  *Tree generation options* – the Figaro tree generation options file path.
 
--  *Figaro Options File* – the Figaro options file path.
-
--  *Figaro Process* – the Figaro process location.
+  -  *Figaro Processor* – the Figaro processor location.
 
 .. _omedit-settings-debugger :
 
@@ -797,29 +1061,31 @@ Debugger
 
 -  Algorithmic Debugger
 
--  *GDB Path* – the gnu debugger path
+  -  *GDB Path* – the gnu debugger path
 
--  *GDB Command Timeout* – timeout for gdb commands.
+  -  *GDB Command Timeout* – timeout for gdb commands.
 
--  *Display C frames* – if true then shows the C stack frames.
+  -  *GDB Output Limit* – limits the GDB output to N characters.
 
--  *Display unknown frames* – if true then shows the unknown stack
-   frames. Unknown stack frames means frames whose file path is unknown.
+  -  *Display C frames* – if true then shows the C stack frames.
 
--  *Clear old output on a new run* – if true then clears the output
-   window on new run.
+  -  *Display unknown frames* – if true then shows the unknown stack
+     frames. Unknown stack frames means frames whose file path is unknown.
 
--  *Clear old log on new run* – if true then clears the log window on
-   new run.
+  -  *Clear old output on a new run* – if true then clears the output
+     window on new run.
+
+  -  *Clear old log on new run* – if true then clears the log window on
+     new run.
 
 -  Transformational Debugger
 
--  *Always show Transformational Debugger after compilation* – if true
-   then always open the Transformational Debugger window after model
-   compilation.
+  -  *Always show Transformational Debugger after compilation* – if true
+     then always open the Transformational Debugger window after model
+     compilation.
 
--  *Generate operations in the info xml* – if true then adds the
-   operations information in the info xml file.
+  -  *Generate operations in the info xml* – if true then adds the
+     operations information in the info xml file.
 
 .. _omedit-fmi-settings :
 
@@ -828,188 +1094,84 @@ FMI
 
 -  Export
 
--  *Version 1.0* – Sets the FMI export version to 1.0
+  -  Version
 
--  *Version 2.0* – Sets the FMI export version to 2.0
+    -  *1.0* – Sets the FMI export version to 1.0
 
-The Equation-based Debugger
----------------------------
+    -  *2.0* – Sets the FMI export version to 2.0
 
-This section gives a short description how to get started using the
-equation-based debugger in OMEdit.
+  -  Type
 
-Enable Tracing Symbolic Transformations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -  *Model Exchange* – Sets the FMI export type to Model Exchange.
 
-This enables tracing symbolic transformations of equations. It is
-optional but strongly recommended in order to fully use the debugger.
-The compilation time overhead from having this tracing on is less than
-1%, however, in addition to that, some time is needed for the system to
-write the xml file containing the transformation tracing information.
+    -  *Co-Simulation* – Sets the FMI export type to Co-Simulation.
 
-Enable +d=infoXmlOperations in Tools->Options->Simulation (see section
-:ref:`omedit-settings-simulation`) OR alternatively click on the checkbox *Generate operations in
-the info xml* in Tools->Options->Debugger (see section :ref:`omedit-settings-debugger`) which
-performs the same thing.
+    -  *Model Exchange and Co-Simulation* – Sets the FMI export type to Model Exchange and Co-Simulation.
 
-This adds all the transformations performed by OpenModelica on the
-equations and variables stored in the model\_info.xml file. This is
-necessary for the debugger to be able to show the whole path from the
-source equation(s) to the position of the bug.
+  -  *FMU Name* – Sets a prefix for generated FMU file.
 
-Load a Model to Debug
-~~~~~~~~~~~~~~~~~~~~~
+  -  Platforms - list of platforms to generate FMU binaries.
 
-Load an interesting model. We will use the package `Debugging.mo <https://github.com/OpenModelica/OpenModelica-testsuite/blob/master/openmodelica/debugging/Debugging.mo>`__
-since it contains suitable, broken models to demonstrate common errors.
+TLM
+~~~
 
-.. todo ::
+-  General
 
-  Include Debugging.mo in the test models in the distribution?
+  -  TLM Plugin Path - path to TLM plugin bin directory.
 
-Simulate and Start the Debugger
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  -  TLM Manager Process - path to TLM managar process.
 
-Select and simulate the model as usual. For example, if using the
-Debugging package, select the model
-Debugging.Chattering.ChatteringEvents1. If there is an error, you will
-get a clickable link that starts the debugger. If the user interface is
-unresponsive or the running simulation uses too much processing power,
-click cancel simulation first.
+  -  TLM Monitor Process - path to TLM monitor process.
 
-.. figure :: media/omedit-debug-more.png
+Debugger
+--------
 
-  Simulating the model.
+For debugging capability, see :ref:`debugging`.
 
-Use the Transformation Debugger for Browsing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _editingMSL :
 
-Use the transformation debugger. It opens on the equation where the
-error was found. You can browse through the dependencies (variables that
-are defined by the equation, or the equation is dependent on), and
-similar for variables. The equations and variables form a bipartite
-graph that you can walk.
+Editing Modelica Standard Library
+---------------------------------
 
-If the +d=infoXmlOperations was used or you clicked the “generate
-operations” button, the operations performed on the equations and
-variables can be viewed. In the example package, there are not a lot of
-operations because the models are small.
+By default OMEdit loads the Modelica Standard Library (MSL) as a system library. System libraries are read-only.
+If you want to edit MSL you need to load it as user library instead of system library. We don't recommend editing
+MSL but if you really need to and understand the consequences then follow these steps,
 
-Try some larger models, e.g. in the MultiBody library or some other
-library, to see more operations with several transformation steps
-between different versions of the relevant equation(s). If you do not
-trigger any errors in a model, you can still open the debugger, using
-File->Open Transformations File (model\_info.json).
+-  Go to *Tools > Options > Libraries*.
+-  Remove Modelica & ModelicaReference from list of system libraries.
+-  Uncheck *force loading of Modelica Standard Library*.
+-  Add *$OPENMODELICAHOME/lib/omlibrary/Modelica X.X/package.mo* under user libraries.
+-  Restart OMEdit.
 
-.. figure :: media/omedit-transformationsbrowser.png
+State Machines
+--------------
 
-  Transfomations Browser.
+Creating a New Modelica State Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Algorithmic Debugger
-------------------------
+Follow the same steps as defined in :ref:`creating-new-class`.
+Additionally make sure you check the *State* checkbox.
 
-This section gives a short description how to get started using the
-algorithmic debugger in OMEdit. See section :ref:`omedit-settings-simulation` for further details
-of debugger options/settings. The Algorithmic Debugger window can be
-launched from Tools->Windows->Algorithmic Debugger.
+.. figure :: media/new-state.png
+  :name: omedit-new-state
 
-Adding Breakpoints
+  Creating a new Modelica state.
+
+Making Transitions
 ~~~~~~~~~~~~~~~~~~
 
-There are two ways to add the breakpoints,
+In order to make a transition from one state to another the user first needs
+to enable the transition mode (|transition-mode|) from the toolbar.
 
--  Click directly on the line number in Text View, a red circle is
-       created indicating a breakpoint as shown in :numref:`omedit-add-breakpoint`.
+Move the mouse over the state. The mouse cursor will change from arrow cursor to cross cursor.
+To start the transition press left button and move while keeping the button pressed. Now release the left button.
+Move towards the end state and click when cursor changes to cross cursor.
 
--  Open the Algorithmic Debugger window and add a breakpoint using the
-       right click menu of Breakpoints Browser window.
+A *Create Transition* dialog box will appear which allows you to set the transition attributes.
+Cancelling the dialog will cancel the transition.
 
-.. figure :: media/omedit-add-breakpoint.png
-  :name: omedit-add-breakpoint
+Double click the transition or right click and choose *Edit Transition* to modify the transition attributes.
 
-  Adding breakpoint in Text View.
-
-Start the Algorithmic Debugger
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You should add breakpoints before starting the debugger because
-sometimes the simulation finishes quickly and you won’t get any chance
-to add the breakpoints.
-
-There are four ways to start the debugger,
-
--  Open the Simulation Setup and click on Launch Algorithmic Debugger
-       before pressing Simulate.
-
--  Right click the model in Libraries Browser and select Simulate with
-       Algorithmic Debugger.
-
--  Open the Algorithmic Debugger window and from menu select
-       Debug-> :ref:`omedit-debug-configurations`.
-
--  Open the Algorithmic Debugger window and from menu select
-       Debug-> :ref:`omedit-debug-attach`.
-
-.. _omedit-debug-configurations :
-
-Debug Configurations
-~~~~~~~~~~~~~~~~~~~~
-
-If you already have a simulation executable with debugging symbols
-outside of OMEdit then you can use the Debug->Debug Configurations
-option to load it.
-
-The debugger also supports MetaModelica data structures so one can debug
-omc executable. Select omc executable as program and write the name of
-the mos script file in Arguments.
-
-.. figure :: media/omedit-debug-config.png
-
-  Debug Configurations.
-
-.. _omedit-debug-attach :
-
-Attach to Running Process
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you already have a running simulation executable with debugging
-symbols outside of OMEdit then you can use the Debug->Attach to Running
-Process option to attach the debugger with it. :numref:`omedit-attach-to-process` shows the
-Attach to Running Process dialog. The dialog shows the list of processes
-running on the machine. The user selects the program that he/she wish to
-debug. OMEdit debugger attaches to the process.
-
-.. figure :: media/omedit-attach-to-process.png
-  :name: omedit-attach-to-process
-
-  Attach to Running Process.
-
-Using the Algorithmic Debugger Window
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:numref:`omedit-algorithmic-debugger` shows the Algorithmic Debugger window. The window contains
-the following browsers,
-
--  *Stack Frames Browser* – shows the list of frames. It contains the
-       program context buttons like resume, interrupt, exit, step over,
-       step in, step return. It also contains a threads drop down which
-       allows switching between different threads.
-
--  *BreakPoints Browser* – shows the list of breakpoints. Allows
-       adding/editing/removing breakpoints.
-
--  *Locals Browser* – Shows the list of local variables with values.
-       Select the variable and the value will be shown in the bottom
-       right window. This is just for convenience because some variables
-       might have long values.
-
--  *Debugger CLI* – shows the commands sent to gdb and their responses.
-       This is for advanced users who want to have more control of the
-       debugger. It allows sending commands to gdb.
-
--  *Output Browser* – shows the output of the debugged executable.
-
-.. figure :: media/omedit-algorithmic-debugger.png
-  :name: omedit-algorithmic-debugger
-
-  Algorithmic Debugger.
+.. |transition-mode| image:: media/omedit-icons/transition-mode.*
+  :height: 14pt
+  :alt: OMEdit transition mode icon
